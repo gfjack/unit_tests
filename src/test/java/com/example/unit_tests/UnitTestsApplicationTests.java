@@ -19,40 +19,38 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 class UnitTestsApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  @Test
+  void contextLoads() {}
 
-	@org.junit.Test(expected = IllegalArgumentException.class)
-	public void testNullProject() throws Exception {
-		ProjectService service = new ProjectService();
-		ProjectRepository repo = mock(ProjectRepository.class);
-		service.setProjectRepository(repo);
+  @org.junit.Test(expected = IllegalArgumentException.class)
+  public void testNullProject() throws Exception {
+    ProjectService service = new ProjectService();
+    ProjectRepository repo = mock(ProjectRepository.class);
+    service.setProjectRepository(repo);
 
-		service.addProject(null);
-	}
+    service.addProject(null);
+  }
 
-	@org.junit.Test(expected = Exception.class)
-	public void testNullAddExistedProject() throws Exception {
-		ProjectService service = new ProjectService();
-		ProjectRepository repo = mock(ProjectRepository.class);
-		service.setProjectRepository(repo);
+  @org.junit.Test(expected = Exception.class)
+  public void testNullAddExistedProject() throws Exception {
+    ProjectService service = new ProjectService();
+    ProjectRepository repo = mock(ProjectRepository.class);
+    service.setProjectRepository(repo);
 
-		repo.save(new ProjectInfo(2, "testProject", "china"));
-		ProjectInfo targetProject = new ProjectInfo(2, "testProject", "china");
-		when(repo.queryByProjectId(2)).thenReturn(targetProject);
-	}
+    repo.save(new ProjectInfo(2, "testProject", "china"));
+    ProjectInfo targetProject = new ProjectInfo(2, "testProject", "china");
+    when(repo.queryByProjectId(2)).thenReturn(targetProject);
+  }
 
-	@org.junit.Test
-	public void testGetUser() {
-		ProjectService service = new ProjectService();
-		ProjectRepository repo = mock(ProjectRepository.class);
-		service.setProjectRepository(repo);
-		repo.save(new ProjectInfo(1, "testProject", "china"));
-		when(repo.findAll())
-				.thenReturn(
-						Stream.of(new ProjectInfo(1, "testProject", "china")).collect(Collectors.toList()));
-		Assert.assertEquals(1, service.getAllProject().size());
-	}
-
+  @org.junit.Test
+  public void testGetUser() {
+    ProjectService service = new ProjectService();
+    ProjectRepository repo = mock(ProjectRepository.class);
+    service.setProjectRepository(repo);
+    repo.save(new ProjectInfo(1, "testProject", "china"));
+    when(repo.findAll())
+        .thenReturn(
+            Stream.of(new ProjectInfo(1, "testProject", "china")).collect(Collectors.toList()));
+    Assert.assertEquals(1, service.getAllProject().size());
+  }
 }
